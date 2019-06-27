@@ -4,7 +4,8 @@ class Quote:
         self.targets = []
 
         for t in targets:
-            self.targets.append(t[0])
+            if len(t) > 0:
+                self.targets.append(t[0])
 
     def has_target(self, target):
         return target in self.targets

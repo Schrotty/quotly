@@ -11,11 +11,12 @@ class Quoty:
         if not os.path.exists('data'):
             os.mkdir('data')
 
-        print('> Start reading existing quotes')
-        self.read_quotes()
+        if os.path.exists('.env'):
+            print('> Start reading existing quotes')
+            self.read_quotes()
 
-        print('> Finished reading existing quotes. Found {0} quotes!'.format(len(self.quotes)))
-        print('> Quotly is ready for action!')
+            print('> Finished reading existing quotes. Found {0} quotes!'.format(len(self.quotes)))
+            print('> Quotly is ready for action!')
 
     def get_random(self):
         if len(self.quotes) > 0:
@@ -31,8 +32,6 @@ class Quoty:
                 for t in q.targets:
                     ts += '{0},'.format(t)
 
-                print(q.targets)
-                print(ts)
                 file.write('{0};{1}'.format(q.quote, ts))
 
     def read_quotes(self):
