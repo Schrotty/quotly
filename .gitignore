@@ -138,5 +138,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-/quoty/data/
+/quotly/data/
 /upload.cmd
+/.idea/

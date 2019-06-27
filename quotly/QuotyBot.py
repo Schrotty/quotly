@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 from discord.ext import commands
-from quoty.Quote import Quote
-from quoty.Quoty import Quoty
+from quotly.Quote import Quote
+from quotly.Quoty import Quoty
 
 load_dotenv()
 quoty = Quoty()

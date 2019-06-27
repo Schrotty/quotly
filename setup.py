@@ -1,13 +1,13 @@
 from setuptools import setup, find_packages
 
-import quoty
+import quotly
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
     name='quotly',
-    version=quoty.__version__,
+    version=quotly.__version__,
     packages=find_packages(exclude="web"),
     author='Schrotty',
     author_email='rubenmaurer@live.de',

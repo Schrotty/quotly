@@ -1,6 +1,6 @@
 import os
 from random import randint
-from quoty.Quote import Quote
+from quotly.Quote import Quote
 
 
 class Quoty:
