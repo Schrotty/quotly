@@ -32,3 +32,4 @@ Right now the quotes are stored in a text file.
 * Store quotes in database
 * Mention discord users in quote
 * Command for getting a specific quote
+* Web-interface

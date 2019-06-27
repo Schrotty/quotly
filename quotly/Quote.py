@@ -1,23 +1,17 @@
 class Quote:
-    def __init__(self, quote, *targets):
-        self.quote = quote
+    def __init__(self, *values):
+        self.quote = None
         self.targets = []
 
-        for t in targets:
-            if len(t) > 0:
-                self.targets.append(t[0])
+        if values is not None and values[0] is not None:
+            self.quote = values[0][0]
 
-    def has_target(self, target):
-        return target in self.targets
+            for t in values[0][1:]:
+                if t is not None and len(t) > 0:
+                    self.targets.append(t)
 
-    @staticmethod
-    def filter_by_target(seq, target):
-        for elem in seq:
-            if target in elem.targets:
-                yield elem
+    def __str__(self):
+        if self.quote is not None:
+            return '"{0}" -{1}'.format(self.quote, self.targets[0] if len(self.targets) > 0 else 'Unknown')
 
-    @staticmethod
-    def filter_by_targets(seq, targets):
-        for elem in seq:
-            if targets in elem.targets:
-                yield elem
+        return 'Sorry! Found no suitable quote for your input.'

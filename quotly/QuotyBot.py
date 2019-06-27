@@ -1,10 +1,9 @@
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from discord.ext import commands
-from quotly.Quote import Quote
-from quotly.Quoty import Quoty
+from quotly.Quotly import Quotly
 
-load_dotenv()
-quoty = Quoty()
+load_dotenv(find_dotenv())
+quotly = Quotly()
 quoty_bot = commands.Bot(command_prefix='!')
 
 cmds = {
@@ -15,13 +14,14 @@ cmds = {
 
 @quoty_bot.command(name=cmds['add_quote'])
 async def create(ctx, q, *targets):
-    quoty.quotes.append(Quote(q, targets))
-    quoty.write_quotes()
+    quotly.store_quote(q, targets)
 
-    await ctx.send('New quote: \'{0}\'. Targets: {1}'.format(q, targets))
+    await ctx.send('nothing')
 
 
 @quoty_bot.command(name=cmds['get_quote'])
 async def quote(ctx, *targets):
     if not targets:
-        await ctx.send(quoty.get_random().quote)
+        await ctx.send(quotly.fetch_quote())
+    else:
+        await ctx.send(quotly.fetch_quote(targets))
