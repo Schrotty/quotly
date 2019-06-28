@@ -10,6 +10,10 @@ class Quote:
                 if t is not None and len(t) > 0:
                     self.targets.append(t)
 
+    @staticmethod
+    def from_tuple(quote, *targets):
+        return Quote((quote, targets))
+
     def __str__(self):
         if self.quote is not None:
             return '"{0}" -{1}'.format(self.quote, self.targets[0] if len(self.targets) > 0 else 'Unknown')

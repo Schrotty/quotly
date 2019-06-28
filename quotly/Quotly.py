@@ -10,6 +10,17 @@ class Quotly:
             os.mkdir('data')
 
         self.conn = sqlite3.connect('data/quotes.db')
+        self.initialize()
+
+        print('> Quotly successfully started! Let the quoting begin!')
+
+    def initialize(self):
+        cur = self.conn.cursor()
+
+        cur.execute("create table if not exists quotes "
+                    "(id integer primary key autoincrement, quote text not null , author text)")
+
+        self.conn.commit()
 
     def store_quote(self, quote, *targets):
         cur = self.conn.cursor()
@@ -19,30 +30,38 @@ class Quotly:
             for targ in targets[0]:
                 t.append(targ)
 
-        t.extend([''] * (5 - len(t)))
+        t.extend([''] * (1 - len(t)))
         cur.execute(
-            "insert into quotes (quote, target_one, target_two, target_three, target_four, target_five) "
-            "values (?, ?, ?, ?, ?, ?)", (quote, t[0], t[1], t[2], t[3], t[4]))
+            "insert into quotes (quote, author) "
+            "values (?, ?)", (quote, t[0]))
 
         self.conn.commit()
+
+        # fetch latest quote
+        cur.execute("select quote, author "
+                    "from quotes order by id desc limit 1")
+
+        q = Quote(cur.fetchone())
+        print('> Quote stored: {0}'.format(q))
+        return q
 
     def fetch_quote(self):
         cur = self.conn.cursor()
 
-        cur.execute("select quote, target_one, target_two, target_three, target_four, target_five "
+        cur.execute("select quote, author "
                     "from quotes order by random() limit 1")
 
         return Quote(cur.fetchone())
 
-    def fetch_quote(self, *targets):
+    def fetch_quote_with_targets(self, *targets):
         cur = self.conn.cursor()
 
         t = list(targets)
-        t.extend([''] * (5 - len(targets)))
-        cur.execute("select quote, target_one, target_two, target_three, target_four, target_five "
+        t.extend([''] * (1 - len(targets)))
+        cur.execute("select quote, author "
                     "from quotes "
-                    "where target_one == (?) "
-                    "order by random() limit 1", (t[0]))
+                    "where author == (?) "
+                    "order by random() limit 1", t[0])
 
         return Quote(cur.fetchone())
 
