@@ -3,7 +3,6 @@ from dotenv import load_dotenv, find_dotenv
 from discord.ext import commands
 from quotly.Quotly import Quotly
 
-load_dotenv(find_dotenv())
 quotly = Quotly()
 quoty_bot = commands.Bot(command_prefix='!')
 

@@ -1,6 +1,8 @@
 import os
 import argparse
 
+from dotenv import load_dotenv
+
 from quotly.QuotyBot import quoty_bot
 
 if __name__ == "__main__":
@@ -10,7 +12,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    token = None
     if args.token is not None:
         with open('.env', 'w') as cfg:
             cfg.write('TOKEN={0}'.format(args.token))
@@ -19,12 +20,10 @@ if __name__ == "__main__":
         exit(0)
 
     if args.run:
+        load_dotenv('.env')
 
         # using token from .env file
-        if os.path.exists('.env') and os.getenv('TOKEN') and token is None:
-            token = os.getenv('TOKEN')
-
-        if token is not None:
-            quoty_bot.run(token)
+        if os.path.exists('.env') and os.getenv('TOKEN'):
+            quoty_bot.run(os.getenv('TOKEN'))
         else:
             print('> No discord bot token found!')
